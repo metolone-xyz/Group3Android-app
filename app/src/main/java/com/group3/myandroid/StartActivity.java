@@ -22,6 +22,7 @@ public class StartActivity extends AppCompatActivity {
         }catch (Exception e){
             el.error(e); //エラーログを取る
         }
+
     }
 
 
