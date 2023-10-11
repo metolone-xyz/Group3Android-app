@@ -1,5 +1,9 @@
 package com.group3.myandroid;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.group3.myandroid.global.EasyLogger;
@@ -9,20 +13,18 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_start);
 
-        EasyLogger el = new EasyLogger("TestMode",true);
+        Button startButton = findViewById(R.id.StartButton);    //ボタンを参照
 
-        for (int i = 0; i < 10; i++) {
-            el.debug(i + "回目のログ"); // 0 ~ 9まで出力
-        }
-        el.setGetTrace(false);
-        try {
-            throw new Exception("エラー発生");
-        }catch (Exception e){
-            el.error(e); //エラーログを取る
-        }
-
+        startButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //クリック時にMeasurementActivity
+                Intent intent = new Intent(StartActivity.this, MeasurementActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
