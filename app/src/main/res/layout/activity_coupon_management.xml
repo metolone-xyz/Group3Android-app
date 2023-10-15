@@ -7,4 +7,12 @@
         android:layout_height="match_parent"
         tools:context=".CouponManagementActivity">
 
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/genshin_paimon" android:id="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="245dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="160dp" android:layout_marginEnd="179dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="414dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
