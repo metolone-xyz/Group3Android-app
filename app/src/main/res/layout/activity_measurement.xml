@@ -5,4 +5,15 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MeasurementActivity" android:id="@+id/Maker"/>
+        tools:context=".MeasurementActivity" android:id="@+id/Maker">
+    <Button
+            android:text="STOP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/StopButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="207dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="161dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="477dp" android:layout_marginEnd="159dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
