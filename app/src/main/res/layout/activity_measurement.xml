@@ -18,7 +18,11 @@
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/timerTextView" tools:layout_editor_absoluteY="169dp"
-            tools:layout_editor_absoluteX="163dp"/>
+            android:layout_height="wrap_content" android:id="@+id/timerTextView"
+            android:layout_marginBottom="289dp"
+            app:layout_constraintBottom_toTopOf="@+id/StopButton" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="163dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="168dp" android:layout_marginEnd="190dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
