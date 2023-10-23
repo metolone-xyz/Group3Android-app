@@ -9,7 +9,7 @@
     <Button
             android:text="STOP"
             android:layout_width="350dp"
-            android:layout_height="50dp" android:id="@+id/stopButton"
+            android:layout_height="50dp" android:id="@+id/StopButton"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="250dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
