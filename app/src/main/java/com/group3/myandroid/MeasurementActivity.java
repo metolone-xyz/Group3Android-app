@@ -37,6 +37,7 @@ public class MeasurementActivity extends AppCompatActivity {
         Button stopButton = findViewById(R.id.StopButton);    //ストップボタンを参照
         Button pauseButton = findViewById(R.id.PauseButton);    //ポーズボタンを参照
 
+
         timerTextView = findViewById(R.id.timerTextView);
         startTime = System.currentTimeMillis();
         handler.postDelayed(updateTimeRunnable, 0);
