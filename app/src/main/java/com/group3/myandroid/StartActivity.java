@@ -17,13 +17,10 @@ public class StartActivity extends AppCompatActivity {
 
         Button startButton = findViewById(R.id.StartButton);    //ボタンを参照
 
-        startButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                //クリック時にMeasurementActivity
-                Intent intent = new Intent(StartActivity.this, MeasurementActivity.class);
-                startActivity(intent);
-            }
+        startButton.setOnClickListener(view -> {
+            //クリック時にMeasurementActivity
+            Intent intent = new Intent(StartActivity.this, MeasurementActivity.class);
+            startActivity(intent);
         });
     }
 

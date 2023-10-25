@@ -6,34 +6,36 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.group3.myandroid.global.EasyLogger;
-import org.w3c.dom.Text;
 import android.widget.TextView;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-//メモ:ボタンをインポートする
-
+/**
+ * <h1>MeasurementActivity</h1>
+ * @author minoda
+ */
 public class MeasurementActivity extends AppCompatActivity {
 
-    private long startTime;
-    private Handler handler = new Handler();
-    private TextView timerTextView;
-    private long elapsedTime = 0;
+    //時間計測関係の変数
+    private long startTime; //計測開始時点の時刻をミリ秒単位で保持
+    private Handler handler = new Handler();    //メッセージや実行可能なオブジェクトを通信するためのクラス
+    private TextView timerTextView;     //経過時間を表示
+    private long elapsedTime = 0;   //計測が開始されてからの経過時間をミリ秒単位で保持
 
     //歩数カウント関係の変数
     private SensorManager sensorManager;
     private Sensor stepSensor;
     private int stepCount = 0;
 
-    private Runnable updateTimeRunnable = new Runnable() {
+    //updateTimeRunnable: 一定の間隔で実行されるコードを定義
+    private final Runnable updateTimeRunnable = new Runnable() {
 
         @Override
         public void run() {
-            elapsedTime = System.currentTimeMillis() - startTime;
-            updateTimeDisplay(elapsedTime);
+            elapsedTime = System.currentTimeMillis() - startTime; //現在の時刻とstartTimeとの差を計算して経過時間を更新
+            updateTimeDisplay(elapsedTime); //経過時間をText
             handler.postDelayed(this, 1000);
         }
     };
@@ -53,6 +55,10 @@ public class MeasurementActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     *
+     * @param savedInstanceState test
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +75,7 @@ public class MeasurementActivity extends AppCompatActivity {
         stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
         if(stepSensor == null){
-            //エラー処理
+            // TODO: 2023/10/25 エラー処理を書く
         }
 
         startButton.setOnClickListener(new View.OnClickListener(){
