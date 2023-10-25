@@ -6,6 +6,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MeasurementActivity" android:id="@+id/Maker">
+    <TextView
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/stepCountTextView"
+            app:layout_constraintBottom_toTopOf="@+id/PauseButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintVertical_bias="0.745" android:textStyle="bold" android:textSize="60sp"
+            android:textAlignment="center"/>
     <Button
             android:text="STOP"
             android:layout_width="350dp"
@@ -31,9 +40,8 @@
             android:layout_height="wrap_content" android:id="@+id/timerTextView"
             app:layout_constraintBottom_toTopOf="@+id/PauseButton" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="250dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintVertical_bias="0.0" android:textStyle="bold" android:textSize="60sp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintVertical_bias="0.298" android:textStyle="bold" android:textSize="60sp"
             android:textAlignment="center"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
