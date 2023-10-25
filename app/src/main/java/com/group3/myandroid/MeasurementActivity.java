@@ -34,13 +34,14 @@ public class MeasurementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurement);
 
-        Button startButton = findViewById(R.id.StopButton);    //ボタンを参照
+        Button stopButton = findViewById(R.id.StopButton);    //ストップボタンを参照
+        Button pauseButton = findViewById(R.id.PauseButton);    //ポーズボタンを参照
 
         timerTextView = findViewById(R.id.timerTextView);
         startTime = System.currentTimeMillis();
         handler.postDelayed(updateTimeRunnable, 0);
 
-        startButton.setOnClickListener(new View.OnClickListener(){
+        stopButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //クリック時にMeasurementActivity
@@ -55,7 +56,29 @@ public class MeasurementActivity extends AppCompatActivity {
             }
         });
 
+        final boolean[] isPaused = {false}; // 一時停止状態を管理するフラグ
+
+
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //クリック時に一時停止する機構
+                if (isPaused[0]) {
+                    // 再開
+                    handler.postDelayed(updateTimeRunnable, 0);
+                    //pauseButton.setText("PAUSE"); // ボタンのテキストを"Pause"に戻す
+                } else {
+                    // 一時停止
+                    handler.removeCallbacks(updateTimeRunnable);
+                    //pauseButton.setText("RESUME"); // ボタンのテキストを"Resume"に変更
+                }
+                isPaused[0] =!isPaused[0]; // 一時停止状態を切り替える
+            }
+        });
+
+
     }
+
 
     private void updateTimeDisplay(long millis) {
         int seconds = (int) (millis / 1000) % 60;
