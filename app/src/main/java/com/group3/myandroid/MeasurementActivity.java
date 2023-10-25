@@ -1,3 +1,4 @@
+
 package com.group3.myandroid;
 
 import android.content.Intent;
@@ -18,6 +19,9 @@ public class MeasurementActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private TextView timerTextView;
     private long elapsedTime = 0;
+
+    private long pausedTime = 0;  // 追加: 一時停止時の経過時間を保存する変数
+    private boolean isPaused = false;  // 追加: 一時停止の状態を追跡する変数
     private Runnable updateTimeRunnable = new Runnable() {
 
         @Override
@@ -27,6 +31,8 @@ public class MeasurementActivity extends AppCompatActivity {
             handler.postDelayed(this, 1000);
         }
     };
+
+    //private boolean isPaused = false;
 
 
     @Override
@@ -57,23 +63,26 @@ public class MeasurementActivity extends AppCompatActivity {
             }
         });
 
-        final boolean[] isPaused = {false}; // 一時停止状態を管理するフラグ
+        //final boolean[] isPaused = {false}; // 一時停止状態を管理するフラグ
 
 
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //クリック時に一時停止する機構
-                if (isPaused[0]) {
-                    // 再開
+                if (isPaused) {
+                    // 再開のロジック
+                    startTime = System.currentTimeMillis() - pausedTime;
                     handler.postDelayed(updateTimeRunnable, 0);
-                    //pauseButton.setText("PAUSE"); // ボタンのテキストを"Pause"に戻す
+                    isPaused = false;
+                    pauseButton.setText("PAUSE"); // ボタンのテキストを"Pause"に戻す
                 } else {
-                    // 一時停止
+                    // 一時停止のロジック
                     handler.removeCallbacks(updateTimeRunnable);
-                    //pauseButton.setText("RESUME"); // ボタンのテキストを"Resume"に変更
+                    pausedTime = elapsedTime;
+                    isPaused = true;
+                    pauseButton.setText("RESUME"); // ボタンのテキストを"Resume"に変更
                 }
-                isPaused[0] =!isPaused[0]; // 一時停止状態を切り替える
             }
         });
 

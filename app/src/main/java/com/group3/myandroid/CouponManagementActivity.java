@@ -1,5 +1,8 @@
 package com.group3.myandroid;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +20,20 @@ public class CouponManagementActivity extends AppCompatActivity {
         long passedTime = getIntent().getLongExtra("elapsedTime", 0);
         updateTimeDisplay(passedTime);
 
+        Button backButton = findViewById(R.id.Backbutton);    //ボタンを参照
+
+        backButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //クリック時にStartActivity
+                Intent intent = new Intent(CouponManagementActivity.this, StartActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
 
     private void updateTimeDisplay(long millis) {
         int seconds = (int) (millis / 1000) % 60;
