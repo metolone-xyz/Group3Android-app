@@ -46,8 +46,6 @@ public class CouponManagementActivity extends AppCompatActivity {
         int minutes = (int) ((millis / (1000 * 60)) % 60);
         int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
         timeDisplayTextView.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
-
-        //なんあななあ
     }
 
 }

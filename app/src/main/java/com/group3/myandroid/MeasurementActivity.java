@@ -98,14 +98,21 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 //クリック時に一時停止する機構
                 if (isPaused) {
+                    //センサーリスナーを再登録して計測を再開
+                    sensorManager.registerListener(MeasurementActivity.this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
                     // 再開のロジック
                     startTime = System.currentTimeMillis() - pausedTime;
                     handler.postDelayed(updateTimeRunnable, 0);
                     isPaused = false;
                     pauseButton.setText("PAUSE"); // ボタンのテキストを"Pause"に戻す
                 } else {
+                    //センサーのリスナーの登録を解除して計測を一時停止
+                    sensorManager.unregisterListener(MeasurementActivity.this);
+
                     // 一時停止のロジック
                     handler.removeCallbacks(updateTimeRunnable);
                     pausedTime = elapsedTime;
