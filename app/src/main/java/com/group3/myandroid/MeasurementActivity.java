@@ -18,8 +18,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-//メモ:ボタンをインポートする
-
+//メモ:ローパスフィルタの係数をいじって適切な値にする
 public class MeasurementActivity extends AppCompatActivity implements SensorEventListener{
 
     private long startTime;
@@ -35,9 +34,6 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     private int stepCount = 0;
     private TextView measurementStepCountTextView;
 
-    private float lastAccel = 0f;
-    private float accel = 0f;
-    private final float threshold = 12f;  // 歩数をカウントするための加速度のしきい値
 
     private float prevFilteredValue = 0; //前回のフィルタリング後の値
     private float prevRawValue = 0; //前回の生データの値
