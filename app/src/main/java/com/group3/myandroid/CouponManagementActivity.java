@@ -11,16 +11,22 @@ public class CouponManagementActivity extends AppCompatActivity {
 
     private TextView timeDisplayTextView;
 
+    private TextView stepCountTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_management);
 
         timeDisplayTextView = findViewById(R.id.timeDisplayTextView); // Assuming the TextView's ID is timeDisplayTextView
+        stepCountTextView = findViewById(R.id.stepCountTextView);
         long passedTime = getIntent().getLongExtra("elapsedTime", 0);
         updateTimeDisplay(passedTime);
 
         Button backButton = findViewById(R.id.Backbutton);    //ボタンを参照
+
+        int receivedStepCount = getIntent().getIntExtra("stepCount", 0);
+        stepCountTextView.setText("Steps: " + receivedStepCount);
 
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
