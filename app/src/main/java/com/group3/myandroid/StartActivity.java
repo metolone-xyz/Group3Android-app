@@ -10,6 +10,7 @@ import com.group3.myandroid.global.EasyLogger;
 
 public class StartActivity extends AppCompatActivity {
 
+    //onCreate...アクディビティが最初に作成されるときに実行
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +21,7 @@ public class StartActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //クリック時にMeasurementActivity
+                //クリック時にMeasurementActivityのアクティビティを開始
                 Intent intent = new Intent(StartActivity.this, MeasurementActivity.class);
                 startActivity(intent);
             }

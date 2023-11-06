@@ -27,8 +27,8 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     private TextView timerTextView;
     private long elapsedTime = 0;
 
-    private long pausedTime = 0;  // 追加: 一時停止時の経過時間を保存する変数
-    private boolean isPaused = false;  // 追加: 一時停止の状態を追跡する変数
+    private long pausedTime = 0;  // 一時停止時の経過時間を保存する変数
+    private boolean isPaused = false;  // 一時停止の状態を追跡する変数
 
     private SensorManager sensorManager; //歩数を管理するための変数
     private Sensor stepSensor;
@@ -38,6 +38,10 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     private float lastAccel = 0f;
     private float accel = 0f;
     private final float threshold = 12f;  // 歩数をカウントするための加速度のしきい値
+
+    private float prevFilteredValue = 0; //前回のフィルタリング後の値
+    private float prevRawValue = 0; //前回の生データの値
+    private final float a = 0.8f;   //ローパスフィルタ係数
 
     private Runnable updateTimeRunnable = new Runnable() {
 
@@ -49,8 +53,6 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
         }
     };
 
-    //private boolean isPaused = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +63,17 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
         Button pauseButton = findViewById(R.id.PauseButton);    //ポーズボタンを参照
 
 
-        timerTextView = findViewById(R.id.timerTextView);
-        startTime = System.currentTimeMillis();
+        timerTextView = findViewById(R.id.timerTextView);   //時間を表示するテキストを参照
+        startTime = System.currentTimeMillis(); //
         handler.postDelayed(updateTimeRunnable, 0);
 
         //センサーマネージャーの初期化
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//加速度センサーの初期化
-        measurementStepCountTextView = findViewById(R.id.measurementStepCountTextView);
+        measurementStepCountTextView = findViewById(R.id.measurementStepCountTextView);//歩数を表示するテキストの参照
 
 
+        //歩数センサーがあるかどうかのデバッグ
         EasyLogger el1 = new EasyLogger("sensorOn",true);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) == null) {
             el1.debug("This device does not support step detection");
@@ -94,7 +97,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
             }
         });
 
-        //final boolean[] isPaused = {false}; // 一時停止状態を管理するフラグ
+
 
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +122,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
 
     }
 
+    //onResume と　onPauseメソッドをオーバーライドしてリスナーを登録・解除
     @Override
     protected void onResume() {
         super.onResume();
@@ -147,15 +151,21 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
             float y = event.values[1];
             float z = event.values[2];
 
-            lastAccel = accel;
-            accel = (float) Math.sqrt(x * x + y * y + z * z);
+            //全体の加速度の計算
+            float currentRawValue = (float) Math.sqrt(x*x + y*y + z*z);
 
-            float delta = accel - lastAccel;
+            //ローパスフィルタを適用
+            float filteredValue = a*currentRawValue + (1 - a)*prevFilteredValue;
 
-            if (delta > threshold) {
+            //極大値の検出
+            if (filteredValue < prevFilteredValue && prevFilteredValue > prevRawValue){
                 stepCount++;
                 measurementStepCountTextView.setText("Steps: " + stepCount);
             }
+
+            //値の更新
+            prevRawValue = currentRawValue;
+            prevFilteredValue = filteredValue;
         }
     }
 
