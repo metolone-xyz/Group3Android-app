@@ -37,7 +37,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
 
     private float prevFilteredValue = 0; //前回のフィルタリング後の値
     private float prevRawValue = 0; //前回の生データの値
-    private final float a = 0.8f;   //ローパスフィルタ係数
+    private final float a = 0.5f;   //ローパスフィルタ係数
 
     private Runnable updateTimeRunnable = new Runnable() {
 
@@ -160,10 +160,17 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
             //ローパスフィルタを適用
             float filteredValue = a*currentRawValue + (1 - a)*prevFilteredValue;
 
+            EasyLogger el = new EasyLogger("SensorValue", true);
+
+            //prevFilteredValue - prevRawValue < 3.0f
+
             //極大値の検出
-            if (filteredValue < prevFilteredValue && prevFilteredValue > prevRawValue){
+            if (filteredValue < prevFilteredValue && prevFilteredValue > prevRawValue && 1.0f< prevFilteredValue - prevRawValue && prevFilteredValue - prevRawValue < 3.0f){
                 stepCount++;
                 measurementStepCountTextView.setText("Steps: " + stepCount);
+
+                el.debug("加速度の値の差" + (prevFilteredValue - prevRawValue));
+
             }
 
             //値の更新
