@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Myandroid</string>
+    <string name="pause">PAUSE</string>
+    <string name="resume">RESUME</string>
 
     <string-array name="genre_array">
         <item>id-0</item>

@@ -1,12 +1,10 @@
 package com.group3.myandroid;
 
 import android.content.Intent;
-import android.view.View;
-import android.widget.Button;
-import android.view.View;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.group3.myandroid.global.EasyLogger;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,13 +27,10 @@ public class StartActivity extends AppCompatActivity {
             }
         };
 
-        startButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                //クリック時にMeasurementActivityのアクティビティを開始
-                Timer timer = new Timer();
-                timer.schedule(task, 3000);
-            }
+        startButton.setOnClickListener(view -> {
+            //クリック時にMeasurementActivityのアクティビティを開始
+            Timer timer = new Timer();
+            timer.schedule(task, 3000);
         });
     }
 

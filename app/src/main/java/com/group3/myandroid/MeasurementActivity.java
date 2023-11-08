@@ -1,28 +1,25 @@
 
 package com.group3.myandroid;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
-import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.group3.myandroid.global.EasyLogger;
-import org.w3c.dom.Text;
-import android.widget.TextView;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import com.group3.myandroid.global.EasyLogger;
 
 //メモ:ローパスフィルタの係数をいじって適切な値にする
 public class MeasurementActivity extends AppCompatActivity implements SensorEventListener{
 
     private long startTime;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private TextView timerTextView;
     private long elapsedTime = 0;
 
@@ -37,9 +34,8 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
 
     private float prevFilteredValue = 0; //前回のフィルタリング後の値
     private float prevRawValue = 0; //前回の生データの値
-    private final float a = 0.5f;   //ローパスフィルタ係数
 
-    private Runnable updateTimeRunnable = new Runnable() {
+    private final Runnable updateTimeRunnable = new Runnable() {
 
         @Override
         public void run() {
@@ -75,50 +71,44 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
             el1.debug("This device does not support step detection");
         }
 
-        stopButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                //クリック時にMeasurementActivity
-                Intent intent = new Intent(MeasurementActivity.this, CouponManagementActivity.class);
-                startActivity(intent);
+        stopButton.setOnClickListener(view -> {
+            //クリック時にMeasurementActivity
+            Intent intent = new Intent(MeasurementActivity.this, CouponManagementActivity.class);
+            startActivity(intent);
 
-                handler.removeCallbacks(updateTimeRunnable);
+            handler.removeCallbacks(updateTimeRunnable);
 
-                intent.putExtra("elapsedTime", elapsedTime);
-                intent.putExtra("stepCount", stepCount);
-                startActivity(intent);
+            intent.putExtra("elapsedTime", elapsedTime);
+            intent.putExtra("stepCount", stepCount);
+            startActivity(intent);
 
 
 
-            }
         });
 
 
 
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        pauseButton.setOnClickListener(view -> {
 
-                //クリック時に一時停止する機構
-                if (isPaused) {
-                    //センサーリスナーを再登録して計測を再開
-                    sensorManager.registerListener(MeasurementActivity.this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            //クリック時に一時停止する機構
+            if (isPaused) {
+                //センサーリスナーを再登録して計測を再開
+                sensorManager.registerListener(MeasurementActivity.this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
-                    // 再開のロジック
-                    startTime = System.currentTimeMillis() - pausedTime;
-                    handler.postDelayed(updateTimeRunnable, 0);
-                    isPaused = false;
-                    pauseButton.setText("PAUSE"); // ボタンのテキストを"Pause"に戻す
-                } else {
-                    //センサーのリスナーの登録を解除して計測を一時停止
-                    sensorManager.unregisterListener(MeasurementActivity.this);
+                // 再開のロジック
+                startTime = System.currentTimeMillis() - pausedTime;
+                handler.postDelayed(updateTimeRunnable, 0);
+                isPaused = false;
+                pauseButton.setText(R.string.pause); // ボタンのテキストを"Pause"に戻す
+            } else {
+                //センサーのリスナーの登録を解除して計測を一時停止
+                sensorManager.unregisterListener(MeasurementActivity.this);
 
-                    // 一時停止のロジック
-                    handler.removeCallbacks(updateTimeRunnable);
-                    pausedTime = elapsedTime;
-                    isPaused = true;
-                    pauseButton.setText("RESUME"); // ボタンのテキストを"Resume"に変更
-                }
+                // 一時停止のロジック
+                handler.removeCallbacks(updateTimeRunnable);
+                pausedTime = elapsedTime;
+                isPaused = true;
+                pauseButton.setText(R.string.resume); // ボタンのテキストを"Resume"に変更
             }
         });
 
@@ -140,13 +130,12 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
 
 
 
+    @SuppressLint("DefaultLocale")
     private void updateTimeDisplay(long millis) {
-        int seconds = (int) (millis / 1000) % 60;
-        int minutes = (int) ((millis / (1000*60)) % 60);
-        int hours   = (int) ((millis / (1000*60*60)) % 24);
-        timerTextView.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+        CouponManagementActivity.time(millis, timerTextView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -158,7 +147,9 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
             float currentRawValue = (float) Math.sqrt(x*x + y*y + z*z);
 
             //ローパスフィルタを適用
-            float filteredValue = a*currentRawValue + (1 - a)*prevFilteredValue;
+            //ローパスフィルタ係数
+            float a = 0.5f;
+            float filteredValue = a *currentRawValue + (1 - a)*prevFilteredValue;
 
             EasyLogger el = new EasyLogger("SensorValue", true);
 
