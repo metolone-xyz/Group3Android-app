@@ -26,7 +26,7 @@ public class StartActivity extends AppCompatActivity {
                 }
 
                 public void onFinish() {
-                    // カウントダウンが終了したら、MesurementActivityに遷移
+                    // カウントダウンが終了したら、MeasurementActivityに遷移
                     Intent intent = new Intent(StartActivity.this, MeasurementActivity.class);
                     startActivity(intent);
                 }

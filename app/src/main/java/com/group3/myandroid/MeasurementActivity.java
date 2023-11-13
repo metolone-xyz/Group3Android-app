@@ -120,12 +120,16 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        Intent intent = new Intent(this, StepCounterService.class);
+        stopService(intent);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+        Intent intent = new Intent(this, StepCounterService.class);
+        startService(intent);
     }
 
 
