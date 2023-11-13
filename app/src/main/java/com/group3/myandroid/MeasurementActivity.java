@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.group3.myandroid.global.EasyLogger;
 
+////aaaaa
 //メモ:ローパスフィルタの係数をいじって適切な値にする
 public class MeasurementActivity extends AppCompatActivity implements SensorEventListener{
 
