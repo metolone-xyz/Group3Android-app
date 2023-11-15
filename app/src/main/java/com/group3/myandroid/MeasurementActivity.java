@@ -21,6 +21,8 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     private long startTime;
     private final Handler handler = new Handler();
     private TextView timerTextView;
+
+    //private int previousCount = 0;
     private long elapsedTime = 0;
 
     private long pausedTime = 0;  // 一時停止時の経過時間を保存する変数
@@ -46,6 +48,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     };
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,10 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
         startTime = System.currentTimeMillis(); //
         handler.postDelayed(updateTimeRunnable, 0);
 
+        TextView previousCountTextView = findViewById(R.id.previousCountTextView);
+
+        int receivedPreviousCount = getIntent().getIntExtra("previousCount", 0);
+        previousCountTextView.setText("前回の記録" + receivedPreviousCount + "歩");
         //センサーマネージャーの初期化
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//加速度センサーの初期化
@@ -80,6 +87,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
 
             intent.putExtra("elapsedTime", elapsedTime);
             intent.putExtra("stepCount", stepCount);
+            intent.putExtra("previousCount", receivedPreviousCount);
             startActivity(intent);
 
 
@@ -158,7 +166,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
             //極大値の検出
             if (filteredValue < prevFilteredValue && prevFilteredValue > prevRawValue && 1.0f< prevFilteredValue - prevRawValue && prevFilteredValue - prevRawValue < 3.0f){
                 stepCount++;
-                measurementStepCountTextView.setText("Steps: " + stepCount);
+                measurementStepCountTextView.setText("歩数：" + stepCount + "歩");
 
                 el.debug("加速度の値の差" + (prevFilteredValue - prevRawValue));
 
