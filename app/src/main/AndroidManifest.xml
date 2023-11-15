@@ -15,6 +15,9 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Myandroid"
             tools:targetApi="31">
+        <service android:name=".StepCounterService"
+                 android:enabled="true"
+                 android:exported="false"/>
         <activity
                 android:name=".CouponManagementActivity"
                 android:exported="false"/>

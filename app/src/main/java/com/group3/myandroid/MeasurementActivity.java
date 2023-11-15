@@ -2,8 +2,10 @@
 package com.group3.myandroid;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -35,6 +37,9 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     private float prevFilteredValue = 0; //前回のフィルタリング後の値
     private float prevRawValue = 0; //前回の生データの値
 
+    //ブロードキャストレシーバーの宣言
+    private BroadcastReceiver stepCountReceiver;
+
     private final Runnable updateTimeRunnable = new Runnable() {
 
         @Override
@@ -46,6 +51,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     };
 
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +93,6 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
         });
 
 
-
         pauseButton.setOnClickListener(view -> {
 
             //クリック時に一時停止する機構
@@ -100,6 +105,12 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
                 handler.postDelayed(updateTimeRunnable, 0);
                 isPaused = false;
                 pauseButton.setText(R.string.pause); // ボタンのテキストを"Pause"に戻す
+
+                //サービスを開始する
+                Intent intent = new Intent(this, StepCounterService.class);
+                stopService(intent);
+
+
             } else {
                 //センサーのリスナーの登録を解除して計測を一時停止
                 sensorManager.unregisterListener(MeasurementActivity.this);
@@ -112,10 +123,25 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
             }
         });
 
+        //stepCountReceiverの初期化と登録
+        stepCountReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals("com.group3.myandroid.STEP_COUNT_UPDATE")) {
+                    int updatedStepCount = intent.getIntExtra("backgroundCount", 0);
+                    // UIを更新
+                    measurementStepCountTextView.setText("Steps: " + updatedStepCount);
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter("com.group3.myandroid.STEP_COUNT_UPDATE");
+        registerReceiver(stepCountReceiver, filter);
 
     }
 
+
     //onResume と　onPauseメソッドをオーバーライドしてリスナーを登録・解除
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     @Override
     protected void onResume() {
         super.onResume();
@@ -140,6 +166,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
     }
 
     @SuppressLint("SetTextI18n")
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {

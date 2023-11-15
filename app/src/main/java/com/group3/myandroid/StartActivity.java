@@ -29,6 +29,11 @@ public class StartActivity extends AppCompatActivity {
                     // カウントダウンが終了したら、MeasurementActivityに遷移
                     Intent intent = new Intent(StartActivity.this, MeasurementActivity.class);
                     startActivity(intent);
+
+                    //サービスを開始する
+                    Intent startIntent = new Intent(StartActivity.this, StepCounterService.class);
+                    startService(intent);
+
                 }
             }.start();
         });
