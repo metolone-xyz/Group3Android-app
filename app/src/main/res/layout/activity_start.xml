@@ -13,13 +13,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="健幸増進アプリ"
-            android:textSize="48sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.495"
             android:layout_marginTop="200dp"
-            app:layout_constraintBottom_toTopOf="@+id/StartButton" app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintBottom_toTopOf="@+id/StartButton" app:layout_constraintVertical_bias="0.26"/>
     <Button
             android:text="TAP START"
             android:layout_width="350dp"
@@ -28,6 +28,21 @@
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintVertical_bias="1.0" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="250dp" android:textSize="24sp" android:textStyle="bold"/>
+            android:layout_marginBottom="220dp" android:textSize="24sp" android:textStyle="bold"/>
+    <TextView
+            android:text="前回の記録：なし"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/PreviousCount"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+            android:layout_width="190dp"
+            android:layout_height="175dp" app:srcCompat="@drawable/wark" android:id="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.071"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,17 +17,22 @@ public class CouponManagementActivity extends AppCompatActivity {
 
         timeDisplayTextView = findViewById(R.id.timeDisplayTextView); // Assuming the TextView's ID is timeDisplayTextView
         TextView stepCountTextView = findViewById(R.id.stepCountTextView);
+        TextView previousCountTextView = findViewById(R.id.previousCountTextView);
         long passedTime = getIntent().getLongExtra("elapsedTime", 0);
         updateTimeDisplay(passedTime);
 
         Button backButton = findViewById(R.id.Backbutton);    //ボタンを参照
 
         int receivedStepCount = getIntent().getIntExtra("stepCount", 0);
-        stepCountTextView.setText("Steps: " + receivedStepCount);
+        stepCountTextView.setText("今回の記録：" + receivedStepCount + "歩");
+
+        int receivedPreviousCount = getIntent().getIntExtra("previousCount", 0);
+        previousCountTextView.setText("前回の記録" + receivedPreviousCount + "歩");
 
         backButton.setOnClickListener(view -> {
             //クリック時にStartActivity
             Intent intent = new Intent(CouponManagementActivity.this, StartActivity.class);
+            intent.putExtra("previousCount", receivedStepCount);
             startActivity(intent);
         });
 
