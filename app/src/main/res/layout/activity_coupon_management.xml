@@ -15,7 +15,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="300dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintVertical_bias="0.726" android:textSize="60sp" android:textStyle="bold"
+            app:layout_constraintVertical_bias="0.726" android:textSize="34sp" android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
             android:text="今回の記録：0"
@@ -25,13 +25,13 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="300dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.481" android:textSize="50sp" android:textStyle="bold"
+            app:layout_constraintVertical_bias="0.481" android:textSize="34sp" android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.493"/>
     <TextView
             android:text="お疲れ様でした！"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/Message"
-            android:textStyle="bold" android:textSize="40sp"
+            android:textStyle="bold" android:textSize="34sp"
             android:textAlignment="center" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="90dp"/>

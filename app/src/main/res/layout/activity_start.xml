@@ -28,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintVertical_bias="1.0" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="250dp" android:textSize="24sp" android:textStyle="bold"/>
+            android:layout_marginBottom="220dp" android:textSize="24sp" android:textStyle="bold"/>
     <TextView
             android:text="前回の記録：なし"
             android:textSize="40sp"
