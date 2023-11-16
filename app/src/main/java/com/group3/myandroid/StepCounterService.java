@@ -92,16 +92,19 @@ public class StepCounterService extends Service implements SensorEventListener {
                 backgroundCount++;
 
                 el.debug("加速度の値の差" + (prevFilteredValue - prevRawValue));
+
+                // 歩数更新のブロードキャスト送信
+                Intent intent = new Intent("com.group3.myandroid.STEP_COUNT_UPDATE");
+                intent.putExtra("backgroundCount", backgroundCount);
+                sendBroadcast(intent);
+                backgroundCount = 0;
             }
 
             // 値の更新
             prevRawValue = currentRawValue;
             prevFilteredValue = filteredValue;
 
-            // 歩数更新のブロードキャスト送信
-            Intent intent = new Intent("com.group3.myandroid.STEP_COUNT_UPDATE");
-            intent.putExtra("backgroundCount", backgroundCount);
-            sendBroadcast(intent);
+
         }
     }
 

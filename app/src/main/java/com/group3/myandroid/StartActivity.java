@@ -32,7 +32,7 @@ public class StartActivity extends AppCompatActivity {
 
                     //サービスを開始する
                     Intent startIntent = new Intent(StartActivity.this, StepCounterService.class);
-                    startService(intent);
+                    startService(startIntent);
 
                 }
             }.start();
