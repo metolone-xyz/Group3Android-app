@@ -64,6 +64,11 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
         startTime = System.currentTimeMillis(); //
         handler.postDelayed(updateTimeRunnable, 0);
 
+        TextView previousCountTextView = findViewById(R.id.previousCountTextView);
+
+        int receivedPreviousCount = getIntent().getIntExtra("previousCount", 0);
+        previousCountTextView.setText("前回の記録" + receivedPreviousCount + "歩");
+
         //センサーマネージャーの初期化
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//加速度センサーの初期化
@@ -100,6 +105,7 @@ public class MeasurementActivity extends AppCompatActivity implements SensorEven
 
             intent.putExtra("elapsedTime", elapsedTime);
             intent.putExtra("stepCount", stepCount);
+            intent.putExtra("previousCount", receivedPreviousCount);
             startActivity(intent);
 
             registerReceiver(stepCountReceiver, filter);
