@@ -6,37 +6,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".CouponManagementActivity">
+
     <TextView
-            android:text="TextView"
+            android:text="00:00:00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/timeDisplayTextView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="300dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintVertical_bias="1.0" android:textSize="60sp" android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintVertical_bias="0.726" android:textSize="34sp" android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
     <TextView
-            android:text="Steps: 0"
+            android:text="今回の記録：0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/stepCountTextView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="300dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.652" android:textSize="60sp" android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintVertical_bias="0.481" android:textSize="34sp" android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.493"/>
     <TextView
             android:text="お疲れ様でした！"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/Message"
-            android:textStyle="bold" android:textSize="48sp"
+            android:textStyle="bold" android:textSize="34sp"
             android:textAlignment="center" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="130dp"/>
+            android:layout_marginTop="90dp"/>
     <Button
-            android:text="Back to home"
+            android:text="ホームに戻る"
             android:layout_width="350dp"
             android:layout_height="50dp" android:id="@+id/Backbutton"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,4 +46,14 @@
             android:layout_marginTop="100dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="250dp" android:textSize="24sp" android:textStyle="bold"
             android:textAlignment="center"/>
+
+    <TextView
+            android:text="前回の記録：なし"
+            android:layout_width="275dp"
+            android:layout_height="47dp" android:id="@+id/previousCountTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="30sp" android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintVertical_bias="0.53" android:textAlignment="center"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

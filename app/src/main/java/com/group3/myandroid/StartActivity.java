@@ -15,7 +15,13 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        TextView previousCountTextView = findViewById(R.id.PreviousCount);
+
         Button startButton = findViewById(R.id.StartButton); //ボタンを参照
+
+        int previousStepCount = getIntent().getIntExtra("previousCount", 0);
+        previousCountTextView.setText("前回の記録: " + previousStepCount + "歩");
+
         startButton.setOnClickListener(v -> {
             // 3秒間のカウントダウンを開始
             new CountDownTimer(5000, 1000) {
@@ -26,9 +32,15 @@ public class StartActivity extends AppCompatActivity {
                 }
 
                 public void onFinish() {
-                    // カウントダウンが終了したら、MesurementActivityに遷移
+                    // カウントダウンが終了したら、MeasurementActivityに遷移
                     Intent intent = new Intent(StartActivity.this, MeasurementActivity.class);
+                    intent.putExtra("previousCount", previousStepCount);
                     startActivity(intent);
+
+                    //サービスを開始する
+                    Intent startIntent = new Intent(StartActivity.this, StepCounterService.class);
+                    startService(startIntent);
+
                 }
             }.start();
         });
